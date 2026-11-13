@@ -9,6 +9,8 @@
 仓库已配好 GitHub Actions（`.github/workflows/pages.yml`），推送到 `main` 自动发布到
 `https://tgxp018.github.io/synluxon-nav-web/`。
 
+Pages 源需设为 **GitHub Actions**（Settings → Pages → Build and deployment → Source）。
+
 ## 改内容
 
 全部在 `index.html`：
@@ -16,6 +18,7 @@
 - 已上线卡片：`<a class="card" href="https://t.me/xxx">`，`data-k` 控制搜索关键词
 - 筹备中列表：`<a class="row" href="https://t.me/xxx">`，上线后挪到上面并删掉 `em` 标签
 - 顶部三个数字（已上线 / 筹备中 / 官方频道）手动同步
+- 搜索框旁 `19 项` 与 `#hits` 的初始文案同步
 
 ## 链接清单（2026-11-14 实测）
 
