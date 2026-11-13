@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synluxon · 服务导航</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111212'/%3E%3Cpath d='M20.5 11.2c-.9-1.6-2.6-2.6-4.7-2.6-2.6 0-4.4 1.5-4.4 3.6 0 2 1.4 2.8 4 3.5 2.4.6 3.2 1 3.2 2.1 0 1.3-1.4 2.1-3.3 2.1-1.9 0-3.3-.7-4.1-2.3' fill='none' stroke='%238CA85C' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#121314; --ink-2:#3A3D40; --mute:#74787D;
+    --line:#E2E1DC; --paper:#FFFFFF; --paper-2:#F5F5F1;
+    --olive:#6F8A3D; --olive-soft:#EEF2E4;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper-2); color:var(--ink);
+    font-family:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",-apple-system,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+    padding-bottom:40px;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px}
+
+  /* ---------- 顶栏 ---------- */
+  .bar{background:var(--ink);color:#fff;padding:22px 16px 20px;position:relative;overflow:hidden}
+  .bar::after{content:"";position:absolute;inset:auto -40px -90px auto;width:220px;height:220px;border:1px solid rgba(255,255,255,.09);border-radius:50%}
+  .bar .wrap{padding:0}
+  .brand{display:flex;align-items:center;gap:10px}
+  .mark{width:30px;height:30px;flex:none}
+  .wordmark{font-size:13px;letter-spacing:.16em;font-weight:700;text-transform:uppercase}
+  .wordmark small{display:block;font-size:10px;letter-spacing:.1em;color:#9A9EA3;font-weight:500;text-transform:none;margin-top:2px}
+  h1{font-size:26px;line-height:1.25;margin:16px 0 6px;letter-spacing:-.01em;font-weight:700}
+  .sub{font-size:13px;color:#B4B8BC;margin:0}
+  .stats{display:flex;gap:18px;margin-top:18px;font-size:12px;color:#9EA3A8}
+  .stats b{display:block;font-size:17px;color:#fff;font-weight:650;letter-spacing:.02em;line-height:1.2}
+  .stats .live b{color:#B7CE84}
+
+  /* ---------- 搜索 ---------- */
+  .search{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:0 12px;margin:-18px 0 0;position:relative;z-index:2;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .search svg{flex:none;color:var(--mute);width:17px;height:17px}
+  .search input{border:0;outline:0;background:transparent;flex:1;min-width:0;font:inherit;font-size:16px;padding:11px 0;color:var(--ink)}
+  .search input::placeholder{color:#A2A6AB}
+  .hits{font-size:11px;color:var(--mute);white-space:nowrap}
+
+  /* ---------- 区块 ---------- */
+  section{margin-top:26px}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .sec-head h2{font-size:14px;margin:0;font-weight:700;letter-spacing:.01em}
+  .sec-head h2 span{color:var(--mute);font-weight:500;margin-left:6px;font-size:12px}
+  .sec-head p{margin:0;font-size:11px;color:var(--mute)}
+
+  /* 已上线 */
+  .grid{display:grid;grid-template-columns:1fr;gap:10px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 13px;display:flex;align-items:center;gap:12px;transition:border-color .15s,transform .15s}
+  .card:hover,.card:focus-visible{border-color:var(--olive);transform:translateY(-1px);outline:0}
+  .ico{width:38px;height:38px;flex:none;border-radius:9px;background:var(--olive-soft);display:grid;place-items:center;color:var(--olive)}
+  .ico svg{width:19px;height:19px;stroke-width:1.6}
+  .card b{display:block;font-size:15px;font-weight:650;letter-spacing:.01em}
+  .card i{display:block;font-style:normal;font-size:11.5px;color:var(--mute);margin-top:2px}
+  .go{margin-left:auto;color:#A8ACB1;flex:none}
+  .go svg{width:16px;height:16px;stroke-width:1.8}
+
+  /* 筹备中 */
+  .pending{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-top:1px solid #EFEEEA;font-size:13.5px}
+  .row:first-child{border-top:0}
+  .row:hover,.row:focus-visible{background:#FAFAF6;outline:0}
+  .row .dot{width:5px;height:5px;border-radius:50%;background:#CDD1C7;flex:none;margin-left:2px}
+  .row em{margin-left:auto;font-style:normal;font-size:10.5px;letter-spacing:.04em;color:#9BA08F;border:1px solid #E3E5DA;border-radius:20px;padding:1px 7px;flex:none}
+  .row b{font-weight:550;color:var(--ink-2)}
+  .row small{color:#9A9EA3;font-size:11px}
+
+  /* 频道块 */
+  .cta{margin-top:26px;background:var(--ink);color:#fff;border-radius:var(--radius);padding:20px 18px;display:flex;align-items:center;gap:16px}
+  .cta .t{flex:1;min-width:0}
+  .cta strong{display:block;font-size:16px;font-weight:650}
+  .cta p{margin:5px 0 0;font-size:12px;color:#A9AEB3;line-height:1.5}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;flex:none}
+  .btns a{border-radius:9px;padding:9px 14px;font-size:13px;font-weight:600;white-space:nowrap}
+  .btns a.primary{background:var(--olive);color:#fff}
+  .btns a.primary:hover{background:#7C9A46}
+  .btns a.ghost{border:1px solid rgba(255,255,255,.26);color:#fff}
+  .btns a.ghost:hover{background:rgba(255,255,255,.08)}
+
+  footer{margin-top:22px;font-size:11px;color:#9A9EA3;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  footer a{color:#6F8A3D;text-decoration:underline;text-underline-offset:2px}
+
+  .empty{display:none;padding:18px 14px;font-size:13px;color:var(--mute);background:var(--paper);border:1px dashed var(--line);border-radius:var(--radius);margin-top:14px}
+
+  @media (min-width:560px){
+    .pending{display:grid;grid-template-columns:1fr 1fr}
+    .row:nth-child(2){border-top:0}
+    .row:nth-child(even){border-left:1px solid #EFEEEA}
+    h1{font-size:30px}
+    .bar{padding:30px 16px 26px}
+  }
+  @media (min-width:640px){
+    .grid{grid-template-columns:repeat(3,1fr)}
+    .card{position:relative;flex-direction:column;align-items:flex-start;gap:10px;padding:16px 15px}
+    .go{position:absolute;top:14px;right:14px}
+  }
+  @media (prefers-reduced-motion:reduce){.card{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="#ffffff" fill-opacity=".06" stroke="rgba(255,255,255,.18)"/>
+        <path d="M20.5 11.2c-.9-1.6-2.6-2.6-4.7-2.6-2.6 0-4.4 1.5-4.4 3.6 0 2 1.4 2.8 4 3.5 2.4.6 3.2 1 3.2 2.1 0 1.3-1.4 2.1-3.3 2.1-1.9 0-3.3-.7-4.1-2.3" fill="none" stroke="#B7CE84" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <div class="wordmark">Synluxon<small>服务导航 · service index</small></div>
+    </div>
+    <h1>一个入口，<br>找到全部服务。</h1>
+    <p class="sub">每个服务由独立机器人承载，点击直达。未上线的服务会先指向对应频道。</p>
+    <div class="stats">
+      <div class="live"><b>5</b>已上线</div>
+      <div><b>14</b>筹备中</div>
+      <div><b>1</b>官方频道</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2"/><path d="M15.2 15.2 20 20"/></svg>
+    <input id="q" type="search" placeholder="搜索服务，如「记账」「下载」" autocomplete="off" aria-label="搜索服务">
+    <span class="hits" id="hits">19 项</span>
+  </div>
+
+  <div id="list">
+
+    <section id="sec-online">
+      <div class="sec-head">
+        <h2>已上线<span class="cnt">5</span></h2>
+        <p>点击即打开对应机器人</p>
+      </div>
+      <div class="grid">
+        <a class="card" href="https://t.me/SynluxonBooksBot" target="_blank" rel="noopener" data-k="记账对账 账本 团队 books accounting">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h11.5a2 2 0 0 1 2 2v13H7a2 2 0 0 1-2-2z"/><path d="M5 17.5a2 2 0 0 1 2-2h11.5"/><path d="M9.5 8.5h6"/></svg></span>
+          <span class="txt"><b>记账对账</b><i>团队账本 · 分账 · 数据统计</i></span>
+          <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+        <a class="card" href="https://t.me/SynluxonDropbot" target="_blank" rel="noopener" data-k="抽奖 抽签 开奖 drop lottery giveaway">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3.6" y="9.4" width="16.8" height="10.4" rx="1.6"/><path d="M3 6.1h18v3.3H3z"/><path d="M12 6.1v13.7"/><path d="M12 6.1c-2.6-.4-4.2-1.6-3.6-2.9.5-1.1 2.3-1.2 3.6 2.9M12 6.1c2.6-.4 4.2-1.6 3.6-2.9-.5-1.1-2.3-1.2-3.6 2.9"/></svg></span>
+          <span class="txt"><b>抽奖机器人</b><i>群内抽奖 · 名单抽取</i></span>
+          <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+        <a class="card" href="https://t.me/SynluxonSportsBot" target="_blank" rel="noopener" data-k="体育比分 足球 篮球 比分 sports football basketball">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7.6"/><path d="M12 8.2 15.6 10.8 14.2 15h-4.4L8.4 10.8z"/><path d="M12 4.4v3.8M18.6 15.6l-3-.6M15.6 20.4l-1.4-3M8.4 20.4l1.4-3M5.4 15.6l3-.6M5.8 8.4 8.4 10.8"/></svg></span>
+          <span class="txt"><b>体育比分</b><i>足球 · 篮球 · 实时比分</i></span>
+          <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+        <a class="card" href="https://t.me/SynluxonClockBot" target="_blank" rel="noopener" data-k="考勤 打卡 工时 上下班 clock attendance">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7.6"/><path d="M12 7.9V12l2.9 1.8"/></svg></span>
+          <span class="txt"><b>考勤助手</b><i>上下班打卡 · 工时统计</i></span>
+          <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+        <a class="card" href="https://t.me/SynluxonMusicApp" target="_blank" rel="noopener" data-k="音乐 下载 music 歌曲">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 17.4V6.6l8.2-1.7v10.5"/><ellipse cx="7.2" cy="17.6" rx="2.4" ry="1.9"/><ellipse cx="17.2" cy="15.7" rx="2.4" ry="1.9"/></svg></span>
+          <span class="txt"><b>音乐下载</b><i>多平台搜索 · 原曲下载</i></span>
+          <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <section id="sec-pending">
+      <div class="sec-head">
+        <h2>筹备中<span class="cnt">14</span></h2>
+        <p>机器人未上线，先指向对应频道</p>
+      </div>
+      <div class="pending">
+        <a class="row" href="https://t.me/SynluxonPay" target="_blank" rel="noopener" data-k="支付结算 收款 pay">
+          <span class="dot"></span><b>支付结算</b><small>收款 · 对账 · 结算</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonRelay" target="_blank" rel="noopener" data-k="频道搬运 relay 转发">
+          <span class="dot"></span><b>频道搬运</b><small>跨频道同步</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonFetch" target="_blank" rel="noopener" data-k="资源下载 fetch 下载">
+          <span class="dot"></span><b>资源下载</b><small>链接解析 · 批量抓取</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonFlow" target="_blank" rel="noopener" data-k="流水明细 flow 账单">
+          <span class="dot"></span><b>流水明细</b><small>收支流水 · 导出</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonHub" target="_blank" rel="noopener" data-k="统一枢纽 hub">
+          <span class="dot"></span><b>统一枢纽</b><small>多服务聚合面板</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonSupport" target="_blank" rel="noopener" data-k="客服售后 support 工单">
+          <span class="dot"></span><b>客服售后</b><small>工单 · 售后处理</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonAsk" target="_blank" rel="noopener" data-k="智能问答 ask ai 问答">
+          <span class="dot"></span><b>智能问答</b><small>AI 对话 · 资料检索</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonGuard" target="_blank" rel="noopener" data-k="社群风控 guard 群管">
+          <span class="dot"></span><b>社群风控</b><small>入群审核 · 违规拦截</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonDrive" target="_blank" rel="noopener" data-k="文件存储 drive 网盘">
+          <span class="dot"></span><b>文件存储</b><small>云端归档 · 秒传</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonVault" target="_blank" rel="noopener" data-k="安全隐私 vault 加密">
+          <span class="dot"></span><b>安全隐私</b><small>加密存储 · 权限托管</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonShop" target="_blank" rel="noopener" data-k="套餐商城 shop 订阅">
+          <span class="dot"></span><b>套餐商城</b><small>订阅 · 续费管理</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonHelp" target="_blank" rel="noopener" data-k="使用帮助 help 文档">
+          <span class="dot"></span><b>使用帮助</b><small>上手指引 · 常见问题</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonFind" target="_blank" rel="noopener" data-k="全网搜索 find 检索">
+          <span class="dot"></span><b>全网搜索</b><small>多源检索 · 结果聚合</small><em>筹备中</em>
+        </a>
+        <a class="row" href="https://t.me/SynluxonBoss" target="_blank" rel="noopener" data-k="老板账户 boss 管理">
+          <span class="dot"></span><b>老板账户</b><small>总览 · 权限与账目</small><em>筹备中</em>
+        </a>
+      </div>
+    </section>
+
+    <div class="empty" id="empty">没有匹配的服务，换个关键词试试。</div>
+
+    <div class="cta">
+      <div class="t">
+        <strong>Synluxon 官方频道</strong>
+        <p>新功能上线、使用通知与公告，都在这里发布。</p>
+      </div>
+      <div class="btns">
+        <a class="primary" href="https://t.me/synluxon" target="_blank" rel="noopener">进入频道</a>
+        <a class="ghost" href="https://synluxon.com" target="_blank" rel="noopener">官网</a>
+      </div>
+    </div>
+
+    <footer>
+      <span>Synluxon 服务导航 · 更新于 2026-11-14</span>
+      <span>机器人入口以 @SynluxonBot 菜单为准</span>
+    </footer>
+
+  </div>
+</div>
+
+<script src="https://telegram.org/js/telegram-web-app.js" defer></script>
+<script>
+  // 搜索：只做过过滤，DOM 首屏内容已在 HTML 中直出
+  (function () {
+    var q = document.getElementById('q');
+    var hits = document.getElementById('hits');
+    var empty = document.getElementById('empty');
+    var items = Array.prototype.slice.call(document.querySelectorAll('[data-k]'));
+    var secs = [document.getElementById('sec-online'), document.getElementById('sec-pending')];
+    var total = items.length;
+
+    function apply(raw) {
+      var key = (raw || '').trim().toLowerCase();
+      var shown = 0;
+      secs.forEach(function (sec) {
+        var vis = 0;
+        Array.prototype.forEach.call(sec.querySelectorAll('[data-k]'), function (el) {
+          var hit = !key || el.getAttribute('data-k').toLowerCase().indexOf(key) !== -1
+                          || el.textContent.toLowerCase().indexOf(key) !== -1;
+          el.style.display = hit ? '' : 'none';
+          if (hit) vis++;
+        });
+        sec.style.display = vis ? '' : 'none';
+        var cnt = sec.querySelector('.cnt');
+        if (cnt) cnt.textContent = vis;
+        shown += vis;
+      });
+      hits.textContent = key ? shown + ' / ' + total : total + ' 项';
+      empty.style.display = shown ? 'none' : 'block';
+    }
+
+    q.addEventListener('input', function () { apply(q.value); });
+
+    // Telegram WebApp：展开视口，主题保持自带浅色版式
+    window.addEventListener('load', function () {
+      var tg = window.Telegram && window.Telegram.WebApp;
+      if (!tg) return;
+      try { tg.expand(); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
